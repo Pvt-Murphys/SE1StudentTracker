@@ -11,10 +11,10 @@
         <h2>Clock In / Out</h2>
         <select id="location">
             <option value="">-- Select Location --</option>
-            <option value="Office A">Office A</option>
-            <option value="Office B">Office B</option>
-            <option value="Warehouse">Warehouse</option>
-            <option value="Remote Site">Remote Site</option>
+            <option value="Surgery">Surgery</option>
+            <option value="Maternity Ward">Maternity Ward</option>
+            <option value="Intensive Care Unit">Intensive Care Unit</option>
+            <option value="Emergency Room">Emergency Room</option>
         </select>
         <button id="clockInBtn">Clock In</button>
         <button id="clockOutBtn" disabled>Clock Out</button>
@@ -74,6 +74,7 @@
           locationSelect.disabled = false;
 
           statusDiv.textContent = `Clocked out from ${currentLocation} at ${clockOutTime.toLocaleTimeString()} (Session: ${duration} minutes).`;
+          // After this, call script? to send this entry to a database
           statusDiv.style.color = "blue";
 
           // Reset state
