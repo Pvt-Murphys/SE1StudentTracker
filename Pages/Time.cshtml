@@ -29,8 +29,9 @@
 
         let clockedIn = false;
         let currentLocation = "";
-        let clockInTime = null;
-
+        let clock_in_at = null;
+        let status = null;
+        
         clockInBtn.addEventListener("click", () => {
           const selected = locationSelect.value;
 
@@ -48,13 +49,15 @@
 
           clockedIn = true;
           currentLocation = selected;
-          clockInTime = new Date();
-
+          clock_in_at = new Date();
+          status = "open";
+          //TODO : Push status, clock_in_at, and currentLocation to database
+          
           clockInBtn.disabled = true;
           clockOutBtn.disabled = false;
           locationSelect.disabled = true;
 
-          statusDiv.textContent = `Clocked in at ${currentLocation} at ${clockInTime.toLocaleTimeString()}.`;
+          statusDiv.textContent = `Clocked in at ${currentLocation} at ${clock_in_at.toLocaleTimeString()}.`;
           statusDiv.style.color = "green";
         });
 
@@ -66,7 +69,8 @@
           }
 
           const clockOutTime = new Date();
-          const duration = ((clockOutTime - clockInTime) / 60000).toFixed(1); // in minutes
+          status = "closed";
+          const duration = ((clockOutTime - clock_in_at) / 60000).toFixed(1); // in minutes
 
           clockedIn = false;
           clockInBtn.disabled = false;
@@ -79,7 +83,7 @@
 
           // Reset state
           currentLocation = "";
-          clockInTime = null;
+          clock_in_at = null;
         });
     </script>
 </body>
