@@ -1,0 +1,84 @@
+﻿@page
+@model SE1StudentTracker.Pages.Index1Model
+@{
+    ViewData["Title"] = "Time/Tracking Page";
+
+}
+
+
+<body>
+    <div class="container">
+        <h2>Clock In / Out</h2>
+        <select id="location">
+            <option value="">-- Select Location --</option>
+            <option value="Office A">Office A</option>
+            <option value="Office B">Office B</option>
+            <option value="Warehouse">Warehouse</option>
+            <option value="Remote Site">Remote Site</option>
+        </select>
+        <button id="clockInBtn">Clock In</button>
+        <button id="clockOutBtn" disabled>Clock Out</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        const locationSelect = document.getElementById("location");
+        const clockInBtn = document.getElementById("clockInBtn");
+        const clockOutBtn = document.getElementById("clockOutBtn");
+        const statusDiv = document.getElementById("status");
+
+        let clockedIn = false;
+        let currentLocation = "";
+        let clockInTime = null;
+
+        clockInBtn.addEventListener("click", () => {
+          const selected = locationSelect.value;
+
+          if (!selected) {
+            statusDiv.textContent = "Please select a location before clocking in.";
+            statusDiv.style.color = "red";
+            return;
+          }
+
+          if (clockedIn) {
+            statusDiv.textContent = `You are already clocked in at ${currentLocation}.`;
+            statusDiv.style.color = "orange";
+            return;
+          }
+
+          clockedIn = true;
+          currentLocation = selected;
+          clockInTime = new Date();
+
+          clockInBtn.disabled = true;
+          clockOutBtn.disabled = false;
+          locationSelect.disabled = true;
+
+          statusDiv.textContent = `Clocked in at ${currentLocation} at ${clockInTime.toLocaleTimeString()}.`;
+          statusDiv.style.color = "green";
+        });
+
+        clockOutBtn.addEventListener("click", () => {
+          if (!clockedIn) {
+            statusDiv.textContent = "You need to clock in first.";
+            statusDiv.style.color = "red";
+            return;
+          }
+
+          const clockOutTime = new Date();
+          const duration = ((clockOutTime - clockInTime) / 60000).toFixed(1); // in minutes
+
+          clockedIn = false;
+          clockInBtn.disabled = false;
+          clockOutBtn.disabled = true;
+          locationSelect.disabled = false;
+
+          statusDiv.textContent = `Clocked out from ${currentLocation} at ${clockOutTime.toLocaleTimeString()} (Session: ${duration} minutes).`;
+          statusDiv.style.color = "blue";
+
+          // Reset state
+          currentLocation = "";
+          clockInTime = null;
+        });
+    </script>
+</body>
