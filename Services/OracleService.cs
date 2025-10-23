@@ -16,13 +16,30 @@ namespace SE1StudentTracker.Services
         {
             var dt = new DataTable();
 
-            var conn = new OracleConnection(_connString);
+            using (var conn = new OracleConnection(_connString))
+            {
+                conn.Open();
 
-            conn.Open();
+                using (var cmd = new OracleCommand(sql, conn))
+                {
+                    dt.Load(cmd.ExecuteReader());
+                }
+            }
 
-            var cmd = new OracleCommand(sql, conn);
-            dt.Load(cmd.ExecuteReader());
             return dt;
+        }
+
+        public void ExecuteCreateUpdateDelete(string sql)
+        {
+            using (var conn = new OracleConnection(_connString))
+            {
+                conn.Open();
+
+                using (var cmd = new OracleCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery(); 
+                }
+            }
         }
     }
 }

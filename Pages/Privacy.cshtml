@@ -5,6 +5,14 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<h1>@Model.QueryResults.Columns[0]</h1>
+@* @foreach (System.Data.DataRow row in Model.QueryResults.Rows)
+{
+    <tr>
+        @foreach (var item in row.ItemArray)
+        {
+            <td>@item</td>
+        }
+    </tr>
+} *@
 
 <p>Use this page to detail your site's privacy policy.</p>

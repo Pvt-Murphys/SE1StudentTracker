@@ -1,5 +1,5 @@
 ﻿@page
-@model SE1StudentTracker.Pages.Index1Model
+@model SE1StudentTracker.Pages.TimeModel
 @{
     ViewData["Title"] = "Time/Tracking Page";
 
@@ -7,83 +7,86 @@
 
 
 <body>
-    <div class="container">
-        <h2>Clock In / Out</h2>
-        <select id="location">
-            <option value="">-- Select Location --</option>
-            <option value="Surgery">Surgery</option>
-            <option value="Maternity Ward">Maternity Ward</option>
-            <option value="Intensive Care Unit">Intensive Care Unit</option>
-            <option value="Emergency Room">Emergency Room</option>
-        </select>
-        <button id="clockInBtn">Clock In</button>
-        <button id="clockOutBtn" disabled>Clock Out</button>
-        <div id="status"></div>
-    </div>
+    <h2>Clock In / Out</h2>
+    <form method="post" id="ClockInForm">
+        <div class="container">
+            <select id="location">
+                <option value="" disabled selected hidden>-- Select Location --</option>
+                <option value="Surgery">Surgery</option>
+                <option value="Maternity Ward">Maternity Ward</option>
+                <option value="Intensive Care Unit">Intensive Care Unit</option>
+                <option value="Emergency Room">Emergency Room</option>
+            </select>
+
+            <input id="hiddenLocation" type="hidden" asp-for="Location" />
+            <button type="submit" id="clockInBtn" asp-page-handler="">Clock In</button>        
+        </div>
+    </form>
+
+    <form method="post" id="ClockOutForm">
+        <div class="container">
+            <button type="submit" id="clockOutBtn" disabled>Clock Out</button>
+            <div id="status"></div>
+        </div>
+    </form>
 
     <script>
+        const ClockInForm = document.getElementById("ClockInForm");
+        const ClockOutForm = document.getElementById("ClockOutForm")
         const locationSelect = document.getElementById("location");
         const clockInBtn = document.getElementById("clockInBtn");
         const clockOutBtn = document.getElementById("clockOutBtn");
         const statusDiv = document.getElementById("status");
+        
 
         let clockedIn = false;
-        let currentLocation = "";
-        let clock_in_at = null;
-        let status = null;
+
+        ClockInForm.addEventListener("submit", (event) => {
+            const locationSelected = locationSelect.value;
+
+            document.getElementById("hiddenLocation").value = locationSelected;
+
+            if (!locationSelected) {
+                event.preventDefault();
+                statusDiv.textContent = "Please select a location before clocking in.";
+                statusDiv.style.color = "red";
+                return;
+            }
+
+            if (clockedIn) {
+                event.preventDefault();
+                statusDiv.textContent = `You are already clocked in at ${currentLocation}.`;
+                statusDiv.style.color = "orange";
+                return;
+            }
+
+            ClockInForm.submit();
+
+            clockedIn = true;
+
+            clockInBtn.disabled = true;
+            clockOutBtn.disabled = false;
+            locationSelect.disabled = true;
+
+            statusDiv.textContent = `Clocked in at ${currentLocation} at ${clock_in_at.toLocaleTimeString()}.`;
+            statusDiv.style.color = "green";      
+        });
+
+        ClockOutForm.addEventListener("submit", (event) => {
+            if (!clockedIn) {
+                statusDiv.textContent = "You need to clock in first.";
+                statusDiv.style.color = "red";
+                return;
+            }
+
+            clockedIn = false;
+            clockInBtn.disabled = false;
+            clockOutBtn.disabled = true;
+            locationSelect.disabled = false;
+
+            statusDiv.textContent = `Clocked out from ${currentLocation} at ${clockOutTime.toLocaleTimeString()} (Session: ${duration} minutes).`;
+            statusDiv.style.color = "blue";
+        });
         
-        clockInBtn.addEventListener("click", () => {
-          const selected = locationSelect.value;
-
-          if (!selected) {
-            statusDiv.textContent = "Please select a location before clocking in.";
-            statusDiv.style.color = "red";
-            return;
-          }
-
-          if (clockedIn) {
-            statusDiv.textContent = `You are already clocked in at ${currentLocation}.`;
-            statusDiv.style.color = "orange";
-            return;
-          }
-
-          clockedIn = true;
-          currentLocation = selected;
-          clock_in_at = new Date();
-          status = "open";
-          //TODO : Push status, clock_in_at, and currentLocation to database
-          
-          clockInBtn.disabled = true;
-          clockOutBtn.disabled = false;
-          locationSelect.disabled = true;
-
-          statusDiv.textContent = `Clocked in at ${currentLocation} at ${clock_in_at.toLocaleTimeString()}.`;
-          statusDiv.style.color = "green";
-        });
-
-        clockOutBtn.addEventListener("click", () => {
-          if (!clockedIn) {
-            statusDiv.textContent = "You need to clock in first.";
-            statusDiv.style.color = "red";
-            return;
-          }
-
-          const clockOutTime = new Date();
-          status = "closed";
-          const duration = ((clockOutTime - clock_in_at) / 60000).toFixed(1); // in minutes
-
-          clockedIn = false;
-          clockInBtn.disabled = false;
-          clockOutBtn.disabled = true;
-          locationSelect.disabled = false;
-
-          statusDiv.textContent = `Clocked out from ${currentLocation} at ${clockOutTime.toLocaleTimeString()} (Session: ${duration} minutes).`;
-          // After this, call script? to send this entry to a database
-          statusDiv.style.color = "blue";
-
-          // Reset state
-          currentLocation = "";
-          clock_in_at = null;
-        });
     </script>
 </body>

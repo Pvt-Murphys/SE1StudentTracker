@@ -19,7 +19,7 @@ namespace SE1StudentTracker.Pages
 
         public void OnGet()
         {
-            QueryResults = _oracleService.ExecuteQuery("SELECT 'test pull' AS TEST FROM dual");
+            //QueryResults = _oracleService.ExecuteQuery("SELECT * FROM USER_ACCOUNT");
         }
     }
 
