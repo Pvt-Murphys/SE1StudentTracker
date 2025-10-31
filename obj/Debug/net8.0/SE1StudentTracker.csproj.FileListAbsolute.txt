@@ -77,3 +77,16 @@ D:\ETSU Fall 2025\Software Engineering I\Tracker\SE1StudentTracker\obj\Debug\net
 D:\ETSU Fall 2025\Software Engineering I\Tracker\SE1StudentTracker\obj\Debug\net8.0\SE1StudentTracker.pdb
 D:\ETSU Fall 2025\Software Engineering I\Tracker\SE1StudentTracker\obj\Debug\net8.0\SE1StudentTracker.genruntimeconfig.cache
 D:\ETSU Fall 2025\Software Engineering I\Tracker\SE1StudentTracker\obj\Debug\net8.0\ref\SE1StudentTracker.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\obj\Debug\net8.0\SE1StudentTracker.csproj.AssemblyReference.cache
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\Oracle.ManagedDataAccess.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\runtimes\linux\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\runtimes\osx\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\User\Documents\Github\SE1StudentTracker\obj\Debug\net8.0\SE1Stude.7274DE52.Up2Date
