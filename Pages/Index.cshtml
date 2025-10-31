@@ -1,33 +1,10 @@
-@page
-@model SE1StudentTracker.Pages.TimeSessions.IndexModel
+﻿@page
+@model IndexModel
 @{
-    ViewData["Title"] = "Recent Sessions";
+    ViewData["Title"] = "Home page";
 }
-<h2>Recent Sessions</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>When</th>
-      <th>User</th>
-      <th>Role</th>
-      <th>Type</th>
-      <th>Course/Section</th>
-      <th>Location</th>
-      <th>Clock Out</th>
-    </tr>
-  </thead>
-  <tbody>
-  @foreach (var s in Model.Sessions)
-  {
-    <tr>
-      <td>@s.ClockIn</td>
-      <td>@s.FirstName @s.LastName</td>
-      <td>@s.RoleName</td>
-      <td>@s.SessionType</td>
-      <td>@(string.IsNullOrEmpty(s.CourseCode) ? "-" : $"{s.CourseCode} · {s.SectionCode}")</td>
-      <td>@(s.LocationText ?? "-")</td>
-      <td>@(s.ClockOut?.ToString() ?? "-")</td>
-    </tr>
-  }
-  </tbody>
-</table>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Please log in to access your information and time tracker.</p>
+</div>
