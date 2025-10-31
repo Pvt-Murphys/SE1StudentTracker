@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\SE1StudentTracker.csproj": {}
+    "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\SE1StudentTracker.csproj": {
+    "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\SE1StudentTracker.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj",
         "projectName": "SE1StudentTracker",
-        "projectPath": "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\SE1StudentTracker.csproj",
+        "projectPath": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\obj\\",
+        "outputPath": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -22,15 +22,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net8.0"
+          "net9.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
+          "net9.0": {
+            "targetAlias": "net9.0",
             "projectReferences": {}
           }
         },
@@ -47,9 +47,13 @@
         "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
+        "net9.0": {
+          "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
               "version": "[9.0.10, )"
@@ -78,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
