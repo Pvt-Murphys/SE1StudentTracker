@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SE1StudentTracker.Services;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SE1StudentTracker.Pages
 {
+    [Authorize]
     public class TimeModel : PageModel
     {
         private readonly Services.OracleService _oracleService;
