@@ -12,6 +12,9 @@ namespace SE1StudentTracker.Pages
         private readonly Services.OracleService _oracleService;
         public DataTable QueryResults { get; set; }
 
+        [BindProperty]
+        public string Location { get; set; }
+
         public DateTime Clock_in_at = DateTime.Now;
 
         public TimeModel(OracleService oracleServ)
@@ -19,18 +22,17 @@ namespace SE1StudentTracker.Pages
             _oracleService = oracleServ;
         }
 
-        public IActionResult OnPostClockIn([FromBody] string location)
+        public IActionResult OnPostClockIn()
         {
-            _oracleService.ExecuteCreateUpdateDelete($"INSERT INTO TIME_SESSION (USER_ID, SESSION_TYPE, LOCATION_TEXT, CLOCK_IN_AT) VALUES (1, 'Clinical', '{location}', SYSTIMESTAMP)");
-
-            return new JsonResult(new { success = true });
+            _oracleService.ExecuteCreateUpdateDelete($"INSERT INTO TIME_SESSION (USER_ID, SESSION_TYPE, LOCATION_TEXT, CLOCK_IN_AT) VALUES (1, 'Clinical', '{Location}', SYSTIMESTAMP)");
+         
+            return RedirectToPage();
         }
 
         public IActionResult OnPostClockOut()
         {
             _oracleService.ExecuteCreateUpdateDelete("UPDATE TIME_SESSION SET CLOCK_OUT_AT = SYSTIMESTAMP WHERE USER_ID = 1");
-
-            return new JsonResult(new { success = true });
+            return RedirectToPage();
         }
         public void OnGet()
         {

@@ -7,102 +7,86 @@
 
 
 <body>
-    <form method="post">
-        @Html.AntiForgeryToken()
+    <h2>Clock In / Out</h2>
+    <form method="post" id="ClockInForm">
+        <div class="container">
+            <select id="location">
+                <option value="" disabled selected hidden>-- Select Location --</option>
+                <option value="Surgery">Surgery</option>
+                <option value="Maternity Ward">Maternity Ward</option>
+                <option value="Intensive Care Unit">Intensive Care Unit</option>
+                <option value="Emergency Room">Emergency Room</option>
+            </select>
+
+            <input id="hiddenLocation" type="hidden" asp-for="Location" />
+            <button type="submit" id="clockInBtn" asp-page-handler="">Clock In</button>        
+        </div>
     </form>
 
-    <h2>Clock In / Out</h2>
-    <div class="container">
-        <select id="location">
-            <option value="" disabled selected hidden>-- Select Location --</option>
-            <option value="Surgery">Surgery</option>
-            <option value="Maternity Ward">Maternity Ward</option>
-            <option value="Intensive Care Unit">Intensive Care Unit</option>
-            <option value="Emergency Room">Emergency Room</option>
-        </select>
-
-        <button id="clockInBtn">Clock In</button>
-        <button id="clockOutBtn">Clock Out</button>
-    </div>
-
-    <div id="status">
-
-    </div>
-    
+    <form method="post" id="ClockOutForm">
+        <div class="container">
+            <button type="submit" id="clockOutBtn" disabled>Clock Out</button>
+            <div id="status"></div>
+        </div>
+    </form>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        const ClockInForm = document.getElementById("ClockInForm");
+        const ClockOutForm = document.getElementById("ClockOutForm")
+        const locationSelect = document.getElementById("location");
+        const clockInBtn = document.getElementById("clockInBtn");
+        const clockOutBtn = document.getElementById("clockOutBtn");
+        const statusDiv = document.getElementById("status");
+        
 
-            const locationSelect = document.getElementById("location");
-            const clockInBtn = document.getElementById("clockInBtn");
-            const clockOutBtn = document.getElementById("clockOutBtn");
-            const statusDiv = document.getElementById("status");
+        let clockedIn = false;
 
-            let currentLocation = "";
-            let clockInTime = null;
+        ClockInForm.addEventListener("submit", (event) => {
+            const locationSelected = locationSelect.value;
 
+            document.getElementById("hiddenLocation").value = locationSelected;
 
-            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            if (!locationSelected) {
+                event.preventDefault();
+                statusDiv.textContent = "Please select a location before clocking in.";
+                statusDiv.style.color = "red";
+                return;
+            }
 
-            function clockIn(Location) {
-                fetch('https://localhost:7007/Time?handler=ClockIn', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        location: Location
-                    }),
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8",
-                        "RequestVerificationToken": token
-                    }
-                });
-            };
+            if (clockedIn) {
+                event.preventDefault();
+                statusDiv.textContent = `You are already clocked in at ${currentLocation}.`;
+                statusDiv.style.color = "orange";
+                return;
+            }
 
-            let clockedIn = false;
+            ClockInForm.submit();
 
-            clockInBtn.addEventListener("click", function () {
-                const locationSelected = locationSelect.value;
+            clockedIn = true;
 
-                if (!locationSelected) {
-                    statusDiv.textContent = "Please select a location before clocking in.";
-                    statusDiv.style.color = "red";
-                    return;
-                }
+            clockInBtn.disabled = true;
+            clockOutBtn.disabled = false;
+            locationSelect.disabled = true;
 
-                if (clockedIn) {
-                    statusDiv.textContent = `You are already clocked in at ${currentLocation}.`;
-                    statusDiv.style.color = "orange";
-                    return;
-                }
-
-                clockIn(locationSelected);
-
-                clockedIn = true;
-
-                clockInBtn.disabled = true;
-                clockOutBtn.disabled = false;
-                locationSelect.disabled = true;
-                currentLocation = locationSelected;
-                clock_in_at = new Date();
-
-                statusDiv.textContent = `Clocked in at ${currentLocation} at ${clock_in_at.toLocaleTimeString()}.`;
-                statusDiv.style.color = "green";
-            });
-
-            // ClockOutForm.addEventListener("submit", (event) => {
-            //     if (!clockedIn) {
-            //         statusDiv.textContent = "You need to clock in first.";
-            //         statusDiv.style.color = "red";
-            //         return;
-            //     }
-
-            //     clockedIn = false;
-            //     clockInBtn.disabled = false;
-            //     clockOutBtn.disabled = true;
-            //     locationSelect.disabled = false;
-
-            //     statusDiv.textContent = `Clocked out from ${currentLocation} at ${clockOutTime.toLocaleTimeString()} (Session: ${duration} minutes).`;
-            //     statusDiv.style.color = "blue";
-            // });
+            statusDiv.textContent = `Clocked in at ${currentLocation} at ${clock_in_at.toLocaleTimeString()}.`;
+            statusDiv.style.color = "green";      
         });
+
+        ClockOutForm.addEventListener("submit", (event) => {
+            if (!clockedIn) {
+                statusDiv.textContent = "You need to clock in first.";
+                statusDiv.style.color = "red";
+                return;
+            }
+
+            clockedIn = false;
+            clockInBtn.disabled = false;
+            clockOutBtn.disabled = true;
+            locationSelect.disabled = false;
+
+            statusDiv.textContent = `Clocked out from ${currentLocation} at ${clockOutTime.toLocaleTimeString()} (Session: ${duration} minutes).`;
+            statusDiv.style.color = "blue";
+        });
+        
     </script>
 </body>
