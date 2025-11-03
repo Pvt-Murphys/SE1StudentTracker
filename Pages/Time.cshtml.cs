@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SE1StudentTracker.Pages
 {
-    [Authorize]
+    [Authorize(Roles = "Student")]
     public class TimeModel : PageModel
     {
         private readonly Services.OracleService _oracleService;
