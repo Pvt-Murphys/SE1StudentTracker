@@ -22,14 +22,15 @@ namespace SE1StudentTracker.Pages
 
         public IActionResult OnPostClockIn()
         {
-            _oracleService.ExecuteCreateUpdateDelete($"INSERT INTO TIME_SESSION (USER_ID, SESSION_TYPE, LOCATION_TEXT, CLOCK_IN_AT) VALUES (1, 'Clinical', '{Location}', SYSTIMESTAMP)");
-         
+            _oracleService.ExecuteCreateUpdateDelete($"INSERT INTO TIME_SESSION (SESSION_TYPE, LOCATION_TEXT, CLOCK_IN_AT) VALUES ('Clinical', '{Location}', SYSTIMESTAMP)");
+            
             return RedirectToPage();
         }
 
         public IActionResult OnPostClockOut()
         {
             _oracleService.ExecuteCreateUpdateDelete("UPDATE TIME_SESSION SET CLOCK_OUT_AT = SYSTIMESTAMP WHERE USER_ID = 1");
+
             return RedirectToPage();
         }
         public void OnGet()
