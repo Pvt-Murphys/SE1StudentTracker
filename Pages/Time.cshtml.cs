@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SE1StudentTracker.Pages
 {
-    [Authorize(Roles = "Student")]
+    //[Authorize(Roles = "Student")]
     public class TimeModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly Services.OracleService _oracleService;
@@ -24,7 +24,8 @@ namespace SE1StudentTracker.Pages
 
         public IActionResult OnPostClockIn()
         {
-            _oracleService.ExecuteCreateUpdateDelete($"INSERT INTO TIME_SESSION (SESSION_TYPE, LOCATION_TEXT, CLOCK_IN_AT) VALUES ('Clinical', '{Location}', SYSTIMESTAMP)");
+            
+            _oracleService.ExecuteCreateUpdateDelete($"INSERT INTO TIME_SESSION (USER_ID, SESSION_TYPE, LOCATION_TEXT, CLOCK_IN_AT) VALUES ('', 'Clinical', '{Location}', SYSTIMESTAMP)");
             
             return RedirectToPage();
         }

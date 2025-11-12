@@ -23,7 +23,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 // <<<<<<< HEAD
-builder.Services.AddSingleton(new OracleService("User Id=STUDENT_TRACKER;Password=Strong#Password1;Data Source=localhost:1521/XE;"));
+builder.Services.AddSingleton(new OracleService("User Id=STUDENT_TRACKER;Password=Strong#Password1;Data Source=localhost:1521/XEPDB1;"));
 
 
 
