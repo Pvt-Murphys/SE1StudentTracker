@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace SE1StudentTracker.Pages
 {
     [Authorize(Roles = "Student")]
-    public class TimeModel : PageModel
+    public class TimeModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly Services.OracleService _oracleService;
         public DataTable QueryResults { get; set; }

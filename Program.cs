@@ -22,14 +22,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-<<<<<<< HEAD
+// <<<<<<< HEAD
 builder.Services.AddSingleton(new OracleService("User Id=STUDENT_TRACKER;Password=Strong#Password1;Data Source=localhost:1521/XE;"));
 
 
 
-=======
+// =======
 builder.Services.AddHttpContextAccessor();
->>>>>>> origin/garrett-student-tracker
+// >>>>>>> origin/garrett-student-tracker
 
 var app = builder.Build();
 

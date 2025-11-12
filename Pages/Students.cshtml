@@ -1,4 +1,11 @@
 ﻿@page
+@using Microsoft.EntityFrameworkCore.Storage
 @model SE1StudentTracker.Pages.StudentsModel
 @{
+    ViewData["Title"] = "Students Page";
+    
 }
+<h1>View Student Records</h1>
+<form asp-page-handler="Records" method="post">
+    <button class="btn btn-default">View Records</button>
+</form>

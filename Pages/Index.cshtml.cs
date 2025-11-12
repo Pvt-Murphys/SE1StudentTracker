@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SE1StudentTracker.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly ILogger<IndexModel> _logger;
 
@@ -14,7 +14,7 @@ namespace SE1StudentTracker.Pages
 
         public void OnGet()
         {
-
+            
         }
     }
 }

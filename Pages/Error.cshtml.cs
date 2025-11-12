@@ -6,7 +6,7 @@ namespace SE1StudentTracker.Pages
 {
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [IgnoreAntiforgeryToken]
-    public class ErrorModel : PageModel
+    public class ErrorModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         public string? RequestId { get; set; }
 
