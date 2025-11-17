@@ -33,27 +33,27 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    await IdentitySeed.SeedRoles(roleManager);
+//using (var scope = app.Services.CreateScope())
+//{
+//    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//    await IdentitySeed.SeedRoles(roleManager);
 
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+//    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-    var adminEmail = "admin@test.com";
-    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+//    var adminEmail = "admin@test.com";
+//    var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-    if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
-    {
-        await userManager.AddToRoleAsync(adminUser, "Admin");
-        await userManager.AddToRoleAsync(adminUser, "User");
-        await userManager.AddToRoleAsync(adminUser, "Teacher");
-        await userManager.AddToRoleAsync(adminUser, "Student");
-    }
+//    if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
+//    {
+//        await userManager.AddToRoleAsync(adminUser, "Admin");
+//        await userManager.AddToRoleAsync(adminUser, "User");
+//        await userManager.AddToRoleAsync(adminUser, "Teacher");
+//        await userManager.AddToRoleAsync(adminUser, "Student");
+//    }
 
     
 
-}
+//}
 
 
 

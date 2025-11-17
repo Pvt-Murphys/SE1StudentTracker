@@ -1,20 +1,22 @@
 {
   "format": 1,
   "restore": {
-    "/home/flynndb/RiderProjects/SE1StudentTracker1/SE1StudentTracker.csproj": {}
+    "D:\\ETSU Fall 2025\\Software Engineering I\\Tracker\\SE1StudentTracker\\SE1StudentTracker.csproj": {}
   },
   "projects": {
-    "/home/flynndb/RiderProjects/SE1StudentTracker1/SE1StudentTracker.csproj": {
+    "D:\\ETSU Fall 2025\\Software Engineering I\\Tracker\\SE1StudentTracker\\SE1StudentTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/flynndb/RiderProjects/SE1StudentTracker1/SE1StudentTracker.csproj",
+        "projectUniqueName": "D:\\ETSU Fall 2025\\Software Engineering I\\Tracker\\SE1StudentTracker\\SE1StudentTracker.csproj",
         "projectName": "SE1StudentTracker",
-        "projectPath": "/home/flynndb/RiderProjects/SE1StudentTracker1/SE1StudentTracker.csproj",
-        "packagesPath": "/home/flynndb/.nuget/packages/",
-        "outputPath": "/home/flynndb/RiderProjects/SE1StudentTracker1/obj/",
+        "projectPath": "D:\\ETSU Fall 2025\\Software Engineering I\\Tracker\\SE1StudentTracker\\SE1StudentTracker.csproj",
+        "packagesPath": "C:\\Users\\mason\\.nuget\\packages\\",
+        "outputPath": "D:\\ETSU Fall 2025\\Software Engineering I\\Tracker\\SE1StudentTracker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/flynndb/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\mason\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -50,6 +52,10 @@
               "version": "[9.0.10, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.10, )"
             },

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SE1StudentTracker.Services;
@@ -18,10 +20,12 @@ namespace SE1StudentTracker.Pages
 
 
         public DateTime Clock_in_at = DateTime.Now;
+        private readonly UserManager<IdentityUser> _user;
 
         public TimeModel(OracleService oracleServ)
         {
             _oracleService = oracleServ;
+            //_user = user;
         }
 
         public IActionResult OnPostClockIn()
