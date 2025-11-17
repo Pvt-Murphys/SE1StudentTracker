@@ -8609,6 +8609,7 @@
     "net9.0": [
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 9.0.10",
       "Microsoft.AspNetCore.Identity.UI >= 9.0.10",
+      "Microsoft.EntityFrameworkCore >= 9.0.10",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.0",
       "Microsoft.EntityFrameworkCore.Sqlite >= 9.0.0",
@@ -8619,23 +8620,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Users\\mason\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj",
+      "projectUniqueName": "D:\\ETSU Fall 2025\\Software Engineering I\\Tracker\\SE1StudentTracker\\SE1StudentTracker.csproj",
       "projectName": "SE1StudentTracker",
-      "projectPath": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\obj\\",
+      "projectPath": "D:\\ETSU Fall 2025\\Software Engineering I\\Tracker\\SE1StudentTracker\\SE1StudentTracker.csproj",
+      "packagesPath": "C:\\Users\\mason\\.nuget\\packages\\",
+      "outputPath": "D:\\ETSU Fall 2025\\Software Engineering I\\Tracker\\SE1StudentTracker\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mason\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8673,6 +8674,10 @@
             "version": "[9.0.10, )"
           },
           "Microsoft.AspNetCore.Identity.UI": {
+            "target": "Package",
+            "version": "[9.0.10, )"
+          },
+          "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[9.0.10, )"
           },

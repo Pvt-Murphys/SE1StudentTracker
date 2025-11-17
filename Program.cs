@@ -22,38 +22,35 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-<<<<<<< HEAD
-builder.Services.AddSingleton(new OracleService("User Id=STUDENT_TRACKER;Password=Strong#Password1;Data Source=localhost:1521/XE;"));
+builder.Services.AddSingleton(new OracleService("User Id=STUDENT_TRACKER;Password=Strong#Password1;Data Source=localhost:1521/XEPDB1;"));
 
 
 
-=======
 builder.Services.AddHttpContextAccessor();
->>>>>>> origin/garrett-student-tracker
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    await IdentitySeed.SeedRoles(roleManager);
+//using (var scope = app.Services.CreateScope())
+//{
+//    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//    await IdentitySeed.SeedRoles(roleManager);
 
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+//    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-    var adminEmail = "admin@test.com";
-    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+//    var adminEmail = "admin@test.com";
+//    var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-    if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
-    {
-        await userManager.AddToRoleAsync(adminUser, "Admin");
-        await userManager.AddToRoleAsync(adminUser, "User");
-        await userManager.AddToRoleAsync(adminUser, "Teacher");
-        await userManager.AddToRoleAsync(adminUser, "Student");
-    }
+//    if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
+//    {
+//        await userManager.AddToRoleAsync(adminUser, "Admin");
+//        await userManager.AddToRoleAsync(adminUser, "User");
+//        await userManager.AddToRoleAsync(adminUser, "Teacher");
+//        await userManager.AddToRoleAsync(adminUser, "Student");
+//    }
 
     
 
-}
+//}
 
 
 
