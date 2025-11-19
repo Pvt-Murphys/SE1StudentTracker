@@ -19,11 +19,13 @@ namespace SE1StudentTracker.Pages
 
         public Task OnPostRecords()
         {
-            _oracleService.ExecuteCreateUpdateDelete("SELECT * FROM TIME_SESSION");
+            // please make sure to update your USER_ID row to varchar instead of int!!!
+            QueryResults = _oracleService.ExecuteQuery("SELECT USER_ID, LOCATION_TEXT, CLOCK_IN_AT, CLOCK_OUT_AT FROM TIME_SESSION");
             return Task.CompletedTask;
         }
         public void OnGet()
         {
+            QueryResults = new DataTable();
         }
     }
 }
