@@ -189,10 +189,3 @@ ORDER BY ts.clock_in_at DESC;
 - **Procedure compile errors:** `SHOW ERRORS` after `06_procedures.sql`.
 - **Time zones:** Timestamps are server time; convert in the app for display if needed.
 
----
-
-## 8) Contributing
-
-- Keep all DB changes in versioned SQL files under `db/`.
-- Don’t commit secrets. Use User Secrets or environment variables for credentials.
-- Keep seed data generic; never commit real student data.

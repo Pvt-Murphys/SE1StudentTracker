@@ -17,9 +17,9 @@ namespace SE1StudentTracker.Data
             var connectionString = config.GetConnectionString("DefaultConnection");
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseOracle(connectionString);
+            optionsBuilder.UseSqlite(connectionString);
 
-            return new AppDbContext(optionsBuilder.Options);
+            return new AppDbContext(optionsBuilder.Options, config);
         }
     }
 }

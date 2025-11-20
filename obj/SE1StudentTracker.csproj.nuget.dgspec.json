@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj": {}
+    "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\SE1StudentTracker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj": {
+    "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\SE1StudentTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\SE1StudentTracker.csproj",
         "projectName": "SE1StudentTracker",
-        "projectPath": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\SE1StudentTracker.csproj",
+        "projectPath": "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\SE1StudentTracker.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\GitHub\\SE1StudentTracker\\obj\\",
+        "outputPath": "C:\\Users\\User\\Documents\\Github\\SE1StudentTracker\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,21 +50,25 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.10, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[9.0.10, )"
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
-              "target": "Package",
-              "version": "[9.0.10, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[9.0.0, )"
             },
@@ -76,19 +80,15 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.10, )"
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[9.0.0, )"
-            },
-            "Oracle.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[9.23.26000, )"
-            },
-            "Oracle.ManagedDataAccess.Core": {
-              "target": "Package",
-              "version": "[23.26.0, )"
             }
           },
           "imports": [

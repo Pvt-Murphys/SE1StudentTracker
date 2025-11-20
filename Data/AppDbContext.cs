@@ -1,14 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace SE1StudentTracker.Data
 {
     public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, String>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+
+        private readonly IConfiguration _configuration;
+        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
         {
+            _configuration = configuration;
         }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -25,6 +31,24 @@ namespace SE1StudentTracker.Data
                 }
             }
         }
-    
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            // SQLite connection needs this pragma enabled
+            using (var db = new SqliteConnection(connectionString))
+            {
+                db.Open();
+                using (var cmd = db.CreateCommand())
+                {
+                    cmd.CommandText = "PRAGMA foreign_keys = ON;";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
+
 }
