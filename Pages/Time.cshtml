@@ -3,7 +3,6 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Time/Tracking Page";
-
 }
 
 
@@ -39,8 +38,9 @@
         const clockInBtn = document.getElementById("clockInBtn");
         const clockOutBtn = document.getElementById("clockOutBtn");
         const statusDiv = document.getElementById("status");
-        let x = document.cookie
+        
         // checks if not clocked in
+        // console.log(document.cookie);
         if (document.cookie === "ClockedIn=1" || document.cookie == null) 
         {
             clockInBtn.disabled = true;
@@ -68,7 +68,7 @@
                 return;
             }
 
-            if (clockedIn) {
+            if (document.cookie === "ClockedIn=1") {
                 event.preventDefault();
                 statusDiv.textContent = `You are already clocked in at ${currentLocation}.`;
                 statusDiv.style.color = "orange";
@@ -88,7 +88,7 @@
         });
 
         ClockOutForm.addEventListener("submit", (event) => {
-            if (!clockedIn) {
+            if (document.cookie === "ClockedIn=0") {
                 statusDiv.textContent = "You need to clock in first.";
                 statusDiv.style.color = "red";
                 return;

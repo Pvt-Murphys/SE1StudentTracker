@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SE1StudentTracker.Pages
 {
-    public class PrivacyModel : PageModel
+    public class PrivacyModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly ILogger<PrivacyModel> _logger;
 

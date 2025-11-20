@@ -1,4 +1,43 @@
 ﻿@page
+@using Microsoft.EntityFrameworkCore.Storage
 @model SE1StudentTracker.Pages.StudentsModel
 @{
+    ViewData["Title"] = "Students Page";
+    
 }
+
+@* Stylize the table for readability *@
+<style>
+    table, th, td {
+        border: 2px solid black;
+        padding: 5px;
+    }
+</style>
+<h1>View Student Records</h1>
+
+<form asp-page-handler="Records" method="post">
+    <button class="btn btn-default">View Records</button>
+</form>
+
+<table>
+    <tr>
+        <th>User</th>
+        <th>Location</th>
+        <th>Clock in</th>
+        <th>Clock out</th>
+    </tr>
+    @foreach (System.Data.DataRow row in Model.QueryResults.Rows)
+    {
+        string userId = row["USER_ID"].ToString();
+        string location = row["LOCATION_TEXT"].ToString();
+        string clockInTime = row["CLOCK_IN_AT"].ToString();
+        string clockOutTime = row["CLOCK_OUT_AT"].ToString();
+        
+        <tr>
+            <td>@userId</td>
+            <td>@location</td>
+            <td>@clockInTime</td>
+            <td>@clockOutTime</td>
+        </tr>
+    }
+</table>
