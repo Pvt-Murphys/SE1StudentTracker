@@ -25,19 +25,25 @@ namespace SE1StudentTracker.Pages
             _logger = logger;
             _userManager = userManager;
         }
-        public DateTime Clock_in_at = DateTime.Now;
-        private readonly UserManager<IdentityUser> _user;
-
 
         public async Task<IActionResult> OnPostClockInAsync()
         {
             try
             {
-                string username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                //Console.WriteLine(username);
-                if (string.IsNullOrEmpty(username))
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                // Debug logging
+                _logger.LogInformation($"Clock In Attempt - UserEmail: {userEmail}, Location: {Location}");
+
+                if (string.IsNullOrEmpty(userEmail))
                 {
                     ModelState.AddModelError(string.Empty, "User not authenticated.");
+                    return Page();
+                }
+
+                if (string.IsNullOrEmpty(Location))
+                {
+                    ModelState.AddModelError(string.Empty, "Location is required.");
                     return Page();
                 }
 
@@ -46,29 +52,37 @@ namespace SE1StudentTracker.Pages
                 var source = "web";
                 var status = "open";
 
+                _logger.LogInformation($"Inserting time_session: UserId={userEmail}, SessionType={sessionType}, Location={Location}, ClockIn={now}");
+
                 _dbContext.Database.ExecuteSqlInterpolated(
                     $@"INSERT INTO time_session (user_id, session_type, location_text, clock_in_at, source, status, created_at)
-                    VALUES ({userId}, {sessionType}, {Location}, {now}, {source}, {status}, {now})"
+                       VALUES ({userEmail}, {sessionType}, {Location}, {now}, {source}, {status}, {now})"
                 );
 
+                _logger.LogInformation("Clock in successful");
                 return RedirectToPage();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error clocking in");
+                _logger.LogError(ex, "Error clocking in - Full Exception");
+                _logger.LogError($"Exception Message: {ex.Message}");
+                _logger.LogError($"Exception InnerException: {ex.InnerException?.Message}");
+                _logger.LogError($"Exception StackTrace: {ex.StackTrace}");
+
                 ModelState.AddModelError(string.Empty, "Error clocking in: " + ex.Message);
                 return Page();
             }
-
         }
 
         public async Task<IActionResult> OnPostClockOutAsync()
         {
             try
             {
-                // Get current user ID from claims
-                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (string.IsNullOrEmpty(userId))
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                _logger.LogInformation($"Clock Out Attempt - userEmail: {userEmail}");
+
+                if (string.IsNullOrEmpty(userEmail))
                 {
                     ModelState.AddModelError(string.Empty, "User not authenticated.");
                     return Page();
@@ -78,20 +92,33 @@ namespace SE1StudentTracker.Pages
                 var closedStatus = "closed";
                 var openStatus = "open";
 
-                // Update the most recent open session for this user
-                _dbContext.Database.ExecuteSqlInterpolated(
-                    $@"UPDATE time_session 
-                       SET clock_out_at = {now}, status = {closedStatus}, updated_at = {now}
-                       WHERE user_id = {userId} AND status = {openStatus}
-                       ORDER BY clock_in_at DESC
-                       LIMIT 1"
-                );
+                _logger.LogInformation($"Updating time_session for UserId={userEmail} with ClockOut={now}");
 
+                _dbContext.Database.ExecuteSqlInterpolated($@"
+                    UPDATE time_session
+                    SET clock_out_at = {now},
+                        status = {closedStatus},
+                        updated_at = {now}
+                    WHERE rowid = (
+                        SELECT rowid
+                        FROM time_session
+                        WHERE user_id = {userEmail}
+                          AND status = {openStatus}
+                        ORDER BY clock_in_at DESC
+                        LIMIT 1
+                    );
+                ");
+
+                _logger.LogInformation("Clock out successful");
                 return RedirectToPage();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error clocking out");
+                _logger.LogError(ex, "Error clocking out - Full Exception");
+                _logger.LogError($"Exception Message: {ex.Message}");
+                _logger.LogError($"Exception InnerException: {ex.InnerException?.Message}");
+                _logger.LogError($"Exception StackTrace: {ex.StackTrace}");
+
                 ModelState.AddModelError(string.Empty, "Error clocking out: " + ex.Message);
                 return Page();
             }
@@ -99,6 +126,6 @@ namespace SE1StudentTracker.Pages
 
         public void OnGet()
         {
-        } 
+        }
     }
 }

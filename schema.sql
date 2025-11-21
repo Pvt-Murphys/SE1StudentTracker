@@ -89,7 +89,7 @@ CREATE TABLE time_session (
   created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at     TIMESTAMP,
   CHECK ((session_type <> 'Class') OR (section_id IS NOT NULL)),
-  FOREIGN KEY (user_id) REFERENCES user_account(user_id),
+  -- FOREIGN KEY (user_id) REFERENCES user_account(user_id),
   FOREIGN KEY (section_id) REFERENCES section(section_id)
 );
 
