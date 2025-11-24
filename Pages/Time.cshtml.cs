@@ -1,40 +1,131 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SE1StudentTracker.Services;
+using Microsoft.EntityFrameworkCore;
+using SE1StudentTracker.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using System.Data;
 
 namespace SE1StudentTracker.Pages
 {
+    [Authorize(Roles = "Student")]
     public class TimeModel : PageModel
     {
-        private readonly Services.OracleService _oracleService;
-        public DataTable QueryResults { get; set; }
+        private readonly AppDbContext _dbContext;
+        private readonly ILogger<TimeModel> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
         [BindProperty]
-        public string Location { get; set; }
+        public string Location { get; set; } = string.Empty;
 
-        public DateTime Clock_in_at = DateTime.Now;
-
-        public TimeModel(OracleService oracleServ)
+        public TimeModel(AppDbContext dbContext, ILogger<TimeModel> logger, UserManager<IdentityUser> userManager)
         {
-            _oracleService = oracleServ;
+            _dbContext = dbContext;
+            _logger = logger;
+            _userManager = userManager;
         }
 
-        public IActionResult OnPostClockIn()
+        public async Task<IActionResult> OnPostClockInAsync()
         {
-            _oracleService.ExecuteCreateUpdateDelete($"INSERT INTO TIME_SESSION (USER_ID, SESSION_TYPE, LOCATION_TEXT, CLOCK_IN_AT) VALUES (1, 'Clinical', '{Location}', SYSTIMESTAMP)");
-         
-            return RedirectToPage();
+            try
+            {
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                // Debug logging
+                _logger.LogInformation($"Clock In Attempt - UserEmail: {userEmail}, Location: {Location}");
+
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    ModelState.AddModelError(string.Empty, "User not authenticated.");
+                    return Page();
+                }
+
+                if (string.IsNullOrEmpty(Location))
+                {
+                    ModelState.AddModelError(string.Empty, "Location is required.");
+                    return Page();
+                }
+
+                var now = DateTime.Now;
+                var sessionType = "Clinical";
+                var source = "web";
+                var status = "open";
+
+                _logger.LogInformation($"Inserting time_session: UserId={userEmail}, SessionType={sessionType}, Location={Location}, ClockIn={now}");
+
+                _dbContext.Database.ExecuteSqlInterpolated(
+                    $@"INSERT INTO time_session (user_id, session_type, location_text, clock_in_at, source, status, created_at)
+                       VALUES ({userEmail}, {sessionType}, {Location}, {now}, {source}, {status}, {now})"
+                );
+
+                _logger.LogInformation("Clock in successful");
+                return RedirectToPage();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error clocking in - Full Exception");
+                _logger.LogError($"Exception Message: {ex.Message}");
+                _logger.LogError($"Exception InnerException: {ex.InnerException?.Message}");
+                _logger.LogError($"Exception StackTrace: {ex.StackTrace}");
+
+                ModelState.AddModelError(string.Empty, "Error clocking in: " + ex.Message);
+                return Page();
+            }
         }
 
-        public IActionResult OnPostClockOut()
+        public async Task<IActionResult> OnPostClockOutAsync()
         {
-            _oracleService.ExecuteCreateUpdateDelete("UPDATE TIME_SESSION SET CLOCK_OUT_AT = SYSTIMESTAMP WHERE USER_ID = 1");
-            return RedirectToPage();
+            try
+            {
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                _logger.LogInformation($"Clock Out Attempt - userEmail: {userEmail}");
+
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    ModelState.AddModelError(string.Empty, "User not authenticated.");
+                    return Page();
+                }
+
+                var now = DateTime.Now;
+                var closedStatus = "closed";
+                var openStatus = "open";
+
+                _logger.LogInformation($"Updating time_session for UserId={userEmail} with ClockOut={now}");
+
+                _dbContext.Database.ExecuteSqlInterpolated($@"
+                    UPDATE time_session
+                    SET clock_out_at = {now},
+                        status = {closedStatus},
+                        updated_at = {now}
+                    WHERE rowid = (
+                        SELECT rowid
+                        FROM time_session
+                        WHERE user_id = {userEmail}
+                          AND status = {openStatus}
+                        ORDER BY clock_in_at DESC
+                        LIMIT 1
+                    );
+                ");
+
+                _logger.LogInformation("Clock out successful");
+                return RedirectToPage();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error clocking out - Full Exception");
+                _logger.LogError($"Exception Message: {ex.Message}");
+                _logger.LogError($"Exception InnerException: {ex.InnerException?.Message}");
+                _logger.LogError($"Exception StackTrace: {ex.StackTrace}");
+
+                ModelState.AddModelError(string.Empty, "Error clocking out: " + ex.Message);
+                return Page();
+            }
         }
+
         public void OnGet()
         {
-            QueryResults = _oracleService.ExecuteQuery("SELECT STUDENT_NUMBER FROM STUDENT_PROFILE");
         }
     }
 }

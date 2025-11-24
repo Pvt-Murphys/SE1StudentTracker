@@ -426,3 +426,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+obj/Debug/net8.0/SE1StudentTracker.AssemblyInfo.cs
+obj/Debug/net8.0/SE1StudentTracker.AssemblyInfoInputs.cache
+obj/Debug/net8.0/SE1StudentTracker.sourcelink.json

@@ -1,16 +1,17 @@
 ﻿@page
 @model SE1StudentTracker.Pages.TimeModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Time/Tracking Page";
-
 }
 
 
 <body>
-    <h2>Clock In / Out</h2>
+<h2>Clock In / Out</h2>
+<!--<h4><span id="myText" /></h4>-->
     <form method="post" id="ClockInForm">
         <div class="container">
-            <select id="location">
+            <select name="Location" id="Location" required>
                 <option value="" disabled selected hidden>-- Select Location --</option>
                 <option value="Surgery">Surgery</option>
                 <option value="Maternity Ward">Maternity Ward</option>
@@ -19,13 +20,13 @@
             </select>
 
             <input id="hiddenLocation" type="hidden" asp-for="Location" />
-            <button type="submit" id="clockInBtn" asp-page-handler="">Clock In</button>        
+            <button type="submit" id="clockInBtn" asp-page-handler="ClockIn">Clock In</button>        
         </div>
     </form>
 
     <form method="post" id="ClockOutForm">
         <div class="container">
-            <button type="submit" id="clockOutBtn" disabled>Clock Out</button>
+            <button type="submit" id="clockOutBtn" asp-page-handler="ClockOut">Clock Out</button>
             <div id="status"></div>
         </div>
     </form>
@@ -38,8 +39,22 @@
         const clockOutBtn = document.getElementById("clockOutBtn");
         const statusDiv = document.getElementById("status");
         
-
-        let clockedIn = false;
+        // checks if not clocked in
+        // console.log(document.cookie);
+        if (document.cookie === "ClockedIn=1" || document.cookie == null) 
+        {
+            clockInBtn.disabled = true;
+            clockOutBtn.disabled = false;
+            locationSelect.disabled = true;
+        }
+        else if (document.cookie === "ClockedIn=0") {
+            clockInBtn.disabled = false;
+            clockOutBtn.disabled = true;
+            locationSelect.disabled = false;
+        }
+        document.getElementById("myText").innerHTML = document.cookie;
+        
+        // let clockedIn = false;
 
         ClockInForm.addEventListener("submit", (event) => {
             const locationSelected = locationSelect.value;
@@ -53,7 +68,7 @@
                 return;
             }
 
-            if (clockedIn) {
+            if (document.cookie === "ClockedIn=1") {
                 event.preventDefault();
                 statusDiv.textContent = `You are already clocked in at ${currentLocation}.`;
                 statusDiv.style.color = "orange";
@@ -62,27 +77,27 @@
 
             ClockInForm.submit();
 
-            clockedIn = true;
+            document.cookie = "ClockedIn=1";
 
-            clockInBtn.disabled = true;
-            clockOutBtn.disabled = false;
-            locationSelect.disabled = true;
+            // clockInBtn.disabled = true;
+            // clockOutBtn.disabled = false;
+            // locationSelect.disabled = true;
 
             statusDiv.textContent = `Clocked in at ${currentLocation} at ${clock_in_at.toLocaleTimeString()}.`;
             statusDiv.style.color = "green";      
         });
 
         ClockOutForm.addEventListener("submit", (event) => {
-            if (!clockedIn) {
+            if (document.cookie === "ClockedIn=0") {
                 statusDiv.textContent = "You need to clock in first.";
                 statusDiv.style.color = "red";
                 return;
             }
 
-            clockedIn = false;
-            clockInBtn.disabled = false;
-            clockOutBtn.disabled = true;
-            locationSelect.disabled = false;
+            document.cookie = "ClockedIn=0";
+            // clockInBtn.disabled = false;
+            // clockOutBtn.disabled = true;
+            // locationSelect.disabled = false;
 
             statusDiv.textContent = `Clocked out from ${currentLocation} at ${clockOutTime.toLocaleTimeString()} (Session: ${duration} minutes).`;
             statusDiv.style.color = "blue";

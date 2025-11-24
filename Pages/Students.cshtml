@@ -1,0 +1,83 @@
+﻿@page
+@using Microsoft.EntityFrameworkCore.Storage
+@model SE1StudentTracker.Pages.StudentsModel
+@{
+    ViewData["Title"] = "Students Page";
+}
+
+@* Stylize the table for readability *@
+<style>
+    table, th, td {
+        border: 2px solid black;
+        padding: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            padding: 8px;
+            width: 300px;
+        }
+
+    button {
+        padding: 8px 15px;
+    }
+</style>
+
+<h1>View Student Records</h1>
+
+<div class="form-group">
+    <form asp-page-handler="Records" method="post">
+        <label for="StudentEmail">Student Email:</label>
+        <input type="email" name="StudentEmail" id="StudentEmail" placeholder="Enter student email" required />
+        <button type="submit" class="btn btn-primary">View Records</button>
+    </form>
+</div>
+
+@if (Model.QueryResults != null && Model.QueryResults.Rows.Count > 0)
+{
+    <h2>Time Records for @Model.StudentEmail</h2>
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>Location</th>
+            <th>Session Type</th>
+            <th>Clock In</th>
+            <th>Clock Out</th>
+            <th>Duration (mins)</th>
+            <th>Status</th>
+        </tr>
+        @foreach (System.Data.DataRow row in Model.QueryResults.Rows)
+        {
+            string userEmail = row["user_id"]?.ToString() ?? "N/A";
+            string location = row["location_text"]?.ToString() ?? "N/A";
+            string sessionType = row["session_type"]?.ToString() ?? "N/A";
+            string clockInTime = row["clock_in_at"]?.ToString() ?? "N/A";
+            string clockOutTime = row["clock_out_at"]?.ToString() ?? "N/A";
+            string duration = row["duration_minutes"]?.ToString() ?? "N/A";
+            string status = row["status"]?.ToString() ?? "N/A";
+
+            <tr>
+                <td>@userEmail</td>
+                <td>@location</td>
+                <td>@sessionType</td>
+                <td>@clockInTime</td>
+                <td>@clockOutTime</td>
+                <td>@duration</td>
+                <td>@status</td>
+            </tr>
+        }
+    </table>
+}
+else if (ViewData.ModelState.IsValid && Model.StudentEmail != null && Model.StudentEmail != "")
+{
+    <p>No records found for @Model.StudentEmail</p>
+}
