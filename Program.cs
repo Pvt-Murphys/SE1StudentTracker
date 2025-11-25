@@ -1,6 +1,7 @@
 using SE1StudentTracker.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +24,16 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+
+
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     await IdentitySeed.SeedRoles(roleManager);
 
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-    var adminEmail = "admin@test.com";
+   /* var adminEmail = "admin@test.com";
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
     if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
@@ -37,7 +42,7 @@ using (var scope = app.Services.CreateScope())
         await userManager.AddToRoleAsync(adminUser, "User");
         await userManager.AddToRoleAsync(adminUser, "Teacher");
         await userManager.AddToRoleAsync(adminUser, "Student");
-    }
+    }*/
 }
 
 // Configure the HTTP request pipeline.
