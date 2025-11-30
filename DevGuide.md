@@ -1,4 +1,98 @@
-# Developer Guide
+# Developer Manual
+
+## Glossary
+
+- Identity: Microsoft's Identity Platform.
+- ASP .Net: Microsoft web application framework used on project.
+
+## Development Environment and Setup
+
+The development environment for this project varied between developers as did the setup. Most members used Visual Studio. Database is handled through SQLite.
+
+## Coding Standards
+
+The following is a list of coding standards used for the project.
+- No global variables- if needed, store information in a cookie.
+- All variable names should be meaningful.
+- Proper indentation should be employed in written code.
+No further standards were used, because we were not asked to implement coding standards before we began the project. These standards are the only ones that can be applied retroactively.
+
+## Development Standards
+
+Due to the small project size and no given instructions to set development standards before project start, no development standards were set.
+
+## Data Dictionary
+
+The connected SQLite database follows this schema:
+
+Tables:
+AspNetRoles
+AspNetUsers
+AspNetRoleClaims
+AspNetUserClaims
+AspNetUserLogins
+AspNetUserRoles
+AspNetUserTokens
+Course
+InstructorProfile
+Section
+time_session
+
+### AspNetRoles
+Contains each role that the application uses. See Microsoft documentation for more.
+
+### AspNetUsers
+Contains each user's account information. See Microsoft documentation for more.
+
+### AspNetRoleClaims
+Contains each claim to a role. See Microsoft documentation for more.
+
+### AspNetUserClaims
+Currently unused. See Microsoft documentation for more.
+
+### AspNetUserLogins
+Log of all logins to the application. See Microsoft documentation for more.
+
+### AspNetUserRoles
+Contains each user's roles. See Microsoft documentation for more.
+
+### AspNetUserTokens
+Unused table that records tokens from SSO logins to user accounts.
+
+### Course
+Unused at present- designed to contain information about a specific course.
+
+### InstructorProfile
+Unused at present- designed to contain relevant information about an instructor.
+
+### Section
+Unused at present- designed to contain a group of Student users for collected information gathering.
+
+### time_session
+Contains every time session entered by a Student user. SessionID is a unique record identifier, UserID is the email that identifies the user that entered it, SessionType defines the type of session it represents, LocationText refers to where the session took place, SectionID references the section that the student belongs to, ClockInAt and ClockOutAt are the start and end times of the session, DurationMinutes is the calculated length of the session, Source is what device type the session was entered from, Status is whether the session is Open (ongoing) or Closed (complete). 
+
+## Design documents
+
+The design documents are contained within the repository, if completed by the members to which they were assigned.
+
+## Test Process
+
+<Mason, put it here please>
+
+## Issue tracking tool
+
+A Github-integrated Kanban board was used to track issues.
+
+## Project Management Tool
+
+No project management tool was used.
+
+## Build and Deployment
+
+The Publish feature on Visual Studio was used to deploy the project to a self-contained state. 
+The only step required to deploy the project is to download the "publish.zip" file contained within the first level of the repository, unzip it, and run the .exe file contained within. If the application launches successfully, it may be accessed on localhost:5000
+
+## Additional Project Details
 
 ### Identity Functions
 This project uses Microsoft's Identity framework for its authentication and role-based access. Currently, SSO is not enabled. Refer to Microsoft's ASP .Net Identity documentation for more details.
@@ -74,4 +168,5 @@ This file adds the roles to the Identity system if the database does not have th
 
 /Program.cs
 Defines the startup process for the application. Assembles all the separate pieces of the project and launches them together. Currently contains depreciated test code for assigning a test account all roles in the application.
+
 
