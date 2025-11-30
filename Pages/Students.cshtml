@@ -57,13 +57,13 @@
         </tr>
         @foreach (System.Data.DataRow row in Model.QueryResults.Rows)
         {
-            string userEmail = row["user_id"]?.ToString() ?? "N/A";
-            string location = row["location_text"]?.ToString() ?? "N/A";
-            string sessionType = row["session_type"]?.ToString() ?? "N/A";
-            string clockInTime = row["clock_in_at"]?.ToString() ?? "N/A";
-            string clockOutTime = row["clock_out_at"]?.ToString() ?? "N/A";
-            string duration = row["duration_minutes"]?.ToString() ?? "N/A";
-            string status = row["status"]?.ToString() ?? "N/A";
+            string userEmail = row["UserId"]?.ToString() ?? "N/A";
+            string location = row["LocationText"]?.ToString() ?? "N/A";
+            string sessionType = row["SessionType"]?.ToString() ?? "N/A";
+            string clockInTime = row["ClockInAt"]?.ToString() ?? "N/A";
+            string clockOutTime = row["ClockOutAt"]?.ToString() ?? "N/A";
+            string duration = row["DurationMinutes"]?.ToString() ?? "N/A";
+            string status = row["Status"]?.ToString() ?? "N/A";
 
             <tr>
                 <td>@userEmail</td>

@@ -69,16 +69,16 @@ namespace SE1StudentTracker.Pages
                     {
                         command.CommandText = @"
                             SELECT 
-                                user_id, 
-                                location_text, 
-                                clock_in_at, 
-                                clock_out_at,
-                                session_type,
-                                status,
-                                duration_minutes
+                                UserId, 
+                                LocationText, 
+                                ClockInAt, 
+                                ClockOutAt,
+                                SessionType,
+                                Status,
+                                DurationMinutes
                             FROM time_session
-                            WHERE user_id = @studentEmail
-                            ORDER BY clock_in_at DESC";
+                            WHERE UserId = @studentEmail
+                            ORDER BY ClockInAt DESC";
 
                         command.Parameters.AddWithValue("@studentEmail", studentEmail);
 

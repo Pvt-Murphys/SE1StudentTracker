@@ -51,12 +51,14 @@ namespace SE1StudentTracker.Pages
                 var sessionType = "Clinical";
                 var source = "web";
                 var status = "open";
+                var d = User.Identity.Name;
 
                 _logger.LogInformation($"Inserting time_session: UserId={userEmail}, SessionType={sessionType}, Location={Location}, ClockIn={now}");
 
+
                 _dbContext.Database.ExecuteSqlInterpolated(
-                    $@"INSERT INTO time_session (user_id, session_type, location_text, clock_in_at, source, status, created_at)
-                       VALUES ({userEmail}, {sessionType}, {Location}, {now}, {source}, {status}, {now})"
+                    $@"INSERT INTO time_session (UserId, SessionType, LocationText, ClockInAt, Source, Status, Notes, CreatedAt)
+                       VALUES ({userEmail}, {sessionType}, {Location}, {now}, {source}, {status}, {d}, {now})"
                 );
 
                 _logger.LogInformation("Clock in successful");
@@ -96,15 +98,15 @@ namespace SE1StudentTracker.Pages
 
                 _dbContext.Database.ExecuteSqlInterpolated($@"
                     UPDATE time_session
-                    SET clock_out_at = {now},
-                        status = {closedStatus},
-                        updated_at = {now}
+                    SET ClockOutAt = {now},
+                        Status = {closedStatus},
+                        UpdatedAt = {now}
                     WHERE rowid = (
                         SELECT rowid
                         FROM time_session
-                        WHERE user_id = {userEmail}
-                          AND status = {openStatus}
-                        ORDER BY clock_in_at DESC
+                        WHERE UserId = {userEmail}
+                          AND Status = {openStatus}
+                        ORDER BY ClockInAt DESC
                         LIMIT 1
                     );
                 ");
