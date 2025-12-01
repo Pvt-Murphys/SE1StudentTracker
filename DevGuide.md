@@ -77,7 +77,7 @@ The design documents are contained within the repository, if completed by the me
 
 ## Test Process
 
-<Mason, put it here please>
+The test documentation is located in the file TestDocument.docx, located in the repository
 
 ## Issue tracking tool
 
@@ -168,5 +168,6 @@ This file adds the roles to the Identity system if the database does not have th
 
 /Program.cs
 Defines the startup process for the application. Assembles all the separate pieces of the project and launches them together. Currently contains depreciated test code for assigning a test account all roles in the application.
+
 
 
